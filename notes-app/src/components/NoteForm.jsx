@@ -9,10 +9,10 @@ const NoteForm = ({ notes, setNotes }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //Validation
-    if (!title || description) return;
+    if (!title || !description) return;
 
     const newNote = {
+      id: Date.now(), // unique key for React
       title,
       priority,
       category,
@@ -20,7 +20,7 @@ const NoteForm = ({ notes, setNotes }) => {
       createdAt: new Date().toISOString(),
     };
 
-    console.log(newNote);
+    setNotes([...notes, newNote]);
 
     // Clear form
     setTitle("");
