@@ -1,10 +1,12 @@
 import { useState } from "react";
+import TextInput from "././inputs/TextInput";
 
 const NoteForm = ({ notes, setNotes }) => {
   const [title, setTitle] = useState("");
   const [priority, setPriority] = useState("Medium");
   const [category, setCategory] = useState("Work");
   const [description, setDescription] = useState("");
+  const [isFormVisible, setIsFormVisible] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +14,7 @@ const NoteForm = ({ notes, setNotes }) => {
     if (!title || !description) return;
 
     const newNote = {
-      id: Date.now(), // unique key for React
+      id: Date.now(),
       title,
       priority,
       category,
@@ -22,7 +24,6 @@ const NoteForm = ({ notes, setNotes }) => {
 
     setNotes([...notes, newNote]);
 
-    // Clear form
     setTitle("");
     setPriority("Medium");
     setCategory("Work");
@@ -30,81 +31,82 @@ const NoteForm = ({ notes, setNotes }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-6"
-    >
-      {/* Title */}
-      <div className="flex flex-col">
-        <label htmlFor="title" className="text-gray-700 font-medium mb-2">
-          Title
-        </label>
-        <input
-          id="title"
-          type="text"
-          placeholder="Enter note title"
-          className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 focus:outline-none transition"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </div>
-
-      {/* Priority */}
-      <div className="flex flex-col">
-        <label htmlFor="priority" className="text-gray-700 font-medium mb-2">
-          Priority
-        </label>
-        <select
-          id="priority"
-          className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 focus:outline-none transition"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
-        >
-          <option value="High">🔴 High</option>
-          <option value="Medium">🟠 Medium</option>
-          <option value="Low">🟢 Low</option>
-        </select>
-      </div>
-
-      {/* Category */}
-      <div className="flex flex-col">
-        <label htmlFor="category" className="text-gray-700 font-medium mb-2">
-          Category
-        </label>
-        <select
-          id="category"
-          className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 focus:outline-none transition"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-        >
-          <option value="Work">📂 Work</option>
-          <option value="Personal">🏠 Personal</option>
-          <option value="Ideas">💡 Ideas</option>
-        </select>
-      </div>
-
-      {/* Description */}
-      <div className="flex flex-col">
-        <label htmlFor="description" className="text-gray-700 font-medium mb-2">
-          Description
-        </label>
-        <textarea
-          id="description"
-          placeholder="Write your note..."
-          className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 focus:outline-none transition resize-none h-24"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </div>
-
-      {/* Submit Button */}
+    <>
+      {/* Toggle Button */}
       <button
-        type="submit"
-        className="w-full bg-purple-500 text-white font-semibold py-3 rounded-xl shadow-md hover:bg-purple-600 transition"
+        onClick={() => setIsFormVisible(!isFormVisible)}
+        className="w-full bg-gray-100 border border-gray-300 text-purple-800 py-2 rounded-lg cursor-pointer hover:bg-purple-200 hover:border-purple-300 transition mb-4"
       >
-        Add Note
+        {isFormVisible ? "Hide Form ➖" : "Add New Note ➕"}
       </button>
-    </form>
+
+      {/* Form */}
+      {isFormVisible && (
+        <form
+          onSubmit={handleSubmit}
+          className="max-w-lg mx-auto bg-white p-6 rounded-2xl shadow-lg space-y-6"
+        >
+          <TextInput
+            label="Title"
+            name="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+
+          {/* Priority */}
+          <div className="flex flex-col">
+            <label className="text-gray-700 font-medium mb-2">
+              Priority
+            </label>
+            <select
+              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300"
+              value={priority}
+              onChange={(e) => setPriority(e.target.value)}
+            >
+              <option value="High">🔴 High</option>
+              <option value="Medium">🟠 Medium</option>
+              <option value="Low">🟢 Low</option>
+            </select>
+          </div>
+
+          {/* Category */}
+          <div className="flex flex-col">
+            <label className="text-gray-700 font-medium mb-2">
+              Category
+            </label>
+            <select
+              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="Work">📂 Work</option>
+              <option value="Personal">🏠 Personal</option>
+              <option value="Ideas">💡 Ideas</option>
+            </select>
+          </div>
+
+          {/* Description */}
+          <div className="flex flex-col">
+            <label className="text-gray-700 font-medium mb-2">
+              Description
+            </label>
+            <textarea
+              placeholder="Write your note..."
+              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 resize-none h-24"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-purple-500 text-white font-semibold py-3 rounded-xl hover:bg-purple-600"
+          >
+            Add Note
+          </button>
+        </form>
+      )}
+    </>
   );
 };
 
