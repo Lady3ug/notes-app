@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TextInput from "././inputs/TextInput";
+import SelectInput from "./inputs/SelectInput";
 
 const NoteForm = ({ notes, setNotes }) => {
   const [title, setTitle] = useState("");
@@ -52,40 +53,28 @@ const NoteForm = ({ notes, setNotes }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
-
-          {/* Priority */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 font-medium mb-2">
-              Priority
-            </label>
-            <select
-              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300"
-              value={priority}
-              onChange={(e) => setPriority(e.target.value)}
-            >
-              <option value="High">🔴 High</option>
-              <option value="Medium">🟠 Medium</option>
-              <option value="Low">🟢 Low</option>
-            </select>
-          </div>
-
-          {/* Category */}
-          <div className="flex flex-col">
-            <label className="text-gray-700 font-medium mb-2">
-              Category
-            </label>
-            <select
-              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="Work">📂 Work</option>
-              <option value="Personal">🏠 Personal</option>
-              <option value="Ideas">💡 Ideas</option>
-            </select>
-          </div>
-
-          {/* Description */}
+          <SelectInput
+            label="Priority"
+            name="priority"
+            value={value}
+            onChange={handleChange}
+            options={[
+              { value: "High", label: "🔴 High" },
+              { value: "Medium", label: "🟠 Medium" },
+              { value: "Low", label: "🟢 Low" },
+            ]}
+          />
+          <SelectInput
+            label="Category"
+            name="category"
+            value={value}
+            onChange={handleChange}
+            options={[
+              { value: "Work", label: "📂 Work" },
+              { value: "Personal", label: "🏠 Personal" },
+              { value: "Ideas", label: "💡 Ideas" },
+            ]}
+          />
           <div className="flex flex-col">
             <label className="text-gray-700 font-medium mb-2">
               Description
