@@ -1,5 +1,5 @@
 import { useState } from "react";
-import TextInput from "././inputs/TextInput";
+import TextInput from "./inputs/TextInput";
 import SelectInput from "./inputs/SelectInput";
 
 const NoteForm = ({ notes, setNotes }) => {
@@ -36,7 +36,7 @@ const NoteForm = ({ notes, setNotes }) => {
       {/* Toggle Button */}
       <button
         onClick={() => setIsFormVisible(!isFormVisible)}
-        className="w-full bg-gray-100 border border-gray-300 text-purple-800 py-2 rounded-lg cursor-pointer hover:bg-purple-200 hover:border-purple-300 transition mb-4"
+        className="w-full bg-gray-100 border border-gray-300 text-purple-800 py-2 rounded-lg hover:bg-purple-200 transition mb-4"
       >
         {isFormVisible ? "Hide Form ➖" : "Add New Note ➕"}
       </button>
@@ -53,28 +53,31 @@ const NoteForm = ({ notes, setNotes }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+
           <SelectInput
             label="Priority"
             name="priority"
-            value={value}
-            onChange={handleChange}
+            value={priority}
+            onChange={(e) => setPriority(e.target.value)}
             options={[
               { value: "High", label: "🔴 High" },
               { value: "Medium", label: "🟠 Medium" },
               { value: "Low", label: "🟢 Low" },
             ]}
           />
+
           <SelectInput
             label="Category"
             name="category"
-            value={value}
-            onChange={handleChange}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
             options={[
               { value: "Work", label: "📂 Work" },
               { value: "Personal", label: "🏠 Personal" },
               { value: "Ideas", label: "💡 Ideas" },
             ]}
           />
+
           <div className="flex flex-col">
             <label className="text-gray-700 font-medium mb-2">
               Description
