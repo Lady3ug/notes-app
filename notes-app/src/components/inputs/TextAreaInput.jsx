@@ -5,8 +5,10 @@ const TextAreaInput = ({ label, name, value, onChange, required = false }) => {
         {label}
       </label>
       <textarea
-        placeholder="Write your note..."
+        id={name}
         name={name}
+        required={required}
+        placeholder="Write your note..."
         className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 resize-none h-24"
         value={value}
         onChange={onChange}
@@ -15,4 +17,4 @@ const TextAreaInput = ({ label, name, value, onChange, required = false }) => {
   );
 };
 
-export default TextAteaInput;
+export default TextAreaInput;

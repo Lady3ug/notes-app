@@ -4,32 +4,45 @@ import SelectInput from "./inputs/SelectInput";
 import TextAreaInput from "./inputs/TextAreaInput";
 
 const NoteForm = ({ notes, setNotes }) => {
-  const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("Medium");
-  const [category, setCategory] = useState("Work");
-  const [description, setDescription] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    priority: "Medium",
+    category: "Work",
+    description: "",
+  });
+
   const [isFormVisible, setIsFormVisible] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!title || !description) return;
+    if (!formData.title || !formData.description) return;
 
     const newNote = {
       id: Date.now(),
-      title,
-      priority,
-      category,
-      description,
+      ...formData,
       createdAt: new Date().toISOString(),
     };
 
     setNotes([...notes, newNote]);
 
-    setTitle("");
-    setPriority("Medium");
-    setCategory("Work");
-    setDescription("");
+    setFormData({
+      title: "",
+      priority: "Medium",
+      category: "Work",
+      description: "",
+    });
+
+    setIsFormVisible(false);
   };
 
   return (
@@ -42,7 +55,6 @@ const NoteForm = ({ notes, setNotes }) => {
         {isFormVisible ? "Hide Form ➖" : "Add New Note ➕"}
       </button>
 
-      {/* Form */}
       {isFormVisible && (
         <form
           onSubmit={handleSubmit}
@@ -51,15 +63,15 @@ const NoteForm = ({ notes, setNotes }) => {
           <TextInput
             label="Title"
             name="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={formData.title}
+            onChange={handleChange}
           />
 
           <SelectInput
             label="Priority"
             name="priority"
-            value={priority}
-            onChange={(e) => setPriority(e.target.value)}
+            value={formData.priority}
+            onChange={handleChange}
             options={[
               { value: "High", label: "🔴 High" },
               { value: "Medium", label: "🟠 Medium" },
@@ -70,21 +82,23 @@ const NoteForm = ({ notes, setNotes }) => {
           <SelectInput
             label="Category"
             name="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            value={formData.category}
+            onChange={handleChange}
             options={[
               { value: "Work", label: "📂 Work" },
               { value: "Personal", label: "🏠 Personal" },
               { value: "Ideas", label: "💡 Ideas" },
             ]}
           />
+
           <TextAreaInput
-            label="setDescription"
+            label="Description"
             name="description"
-            value={description}
+            value={formData.description}
             onChange={handleChange}
             required
           />
+
           <button
             type="submit"
             className="w-full bg-purple-500 text-white font-semibold py-3 rounded-xl hover:bg-purple-600"
