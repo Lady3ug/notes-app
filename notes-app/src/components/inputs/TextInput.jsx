@@ -1,10 +1,4 @@
-const TextInput = ({
-  label,
-  name,
-  value,
-  onChange,
-  required = false,
-}) => {
+const TextInput = ({ label, name, value, onChange, required = false }) => {
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="text-gray-700 font-medium mb-2">

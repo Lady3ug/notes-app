@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TextInput from "./inputs/TextInput";
 import SelectInput from "./inputs/SelectInput";
+import TextAreaInput from "./inputs/TextAreaInput";
 
 const NoteForm = ({ notes, setNotes }) => {
   const [title, setTitle] = useState("");
@@ -77,19 +78,13 @@ const NoteForm = ({ notes, setNotes }) => {
               { value: "Ideas", label: "💡 Ideas" },
             ]}
           />
-
-          <div className="flex flex-col">
-            <label className="text-gray-700 font-medium mb-2">
-              Description
-            </label>
-            <textarea
-              placeholder="Write your note..."
-              className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-300 resize-none h-24"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </div>
-
+          <TextAreaInput
+            label="setDescription"
+            name="description"
+            value={description}
+            onChange={handleChange}
+            required
+          />
           <button
             type="submit"
             className="w-full bg-purple-500 text-white font-semibold py-3 rounded-xl hover:bg-purple-600"
