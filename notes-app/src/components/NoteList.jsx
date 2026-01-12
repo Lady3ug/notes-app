@@ -1,3 +1,5 @@
+import Note from "./Note";
+
 const NoteList = ({ notes, deleteNote }) => {
   // Safety check
   if (notes.length === 0) {
@@ -5,19 +7,9 @@ const NoteList = ({ notes, deleteNote }) => {
   }
 
   return (
-    <div className="max-w-lg mx-auto mt-6 space-y-4">
-      <div key={note.id} className="bg-white p-4 rounded-xl shadow border-l-4">
-        <div className="flex justify-between items-center">
-          <h3 className="font-semibold text-lg">{note.title}</h3>
-          <span className="text-sm text-gray-500">{note.category}</span>
-        </div>
-
-        <p className="text-gray-700 mt-2">{note.description}</p>
-
-        <div className="text-xs text-gray-400 mt-2">
-          Priority: {note.priority}
-        </div>
-      </div>
+    <div className="space-y-4">
+      {notes.map((note) => (
+        <Note key={note.i} note={note} deleteNote={deleteNote} />
       ))}
     </div>
   );
